@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'salted';
+    src: url(Outfit-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: 'Zing';
+    src: url(FontsFree-Net-zing-sans-rust-bold-base.ttf);
+}
+
+
+.login-page {
+  background: linear-gradient(135deg, #66BB6A, #C8E6C9);
+}
+
+.card {
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.btn{
+    background-color: rgb(48, 175, 6);
+    border: none;
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+h3{
+ font-family: 'salted', Arial, Helvetica, sans-serif;
+ font-size: 2rem;
+ font-weight: 800;
+ color: rgb(41, 106, 19);
+}
+
+label{
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+}

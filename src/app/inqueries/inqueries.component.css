@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'Outfit';
+    src: url(Outfit-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: 'Zing';
+    src: url(FontsFree-Net-zing-sans-rust-bold-base.ttf);
+}
+
+@font-face {
+    font-family: 'work';
+    src: url(WorkSans-VariableFont_wght.ttf);
+}
+
+body{
+    background-color: whitesmoke;
+    min-height: 100vh;
+    padding-bottom: 10rem;
+}
+
+
+.card{
+    width: 40rem;
+    justify-self: center;
+    margin-bottom: 2rem;
+}
+
+.card-header{
+    background-color: rgb(6, 182, 71);
+    color: white;
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+    font-weight: 500;
+}
+
+.card-text{
+    font-family: 'work', Arial, Helvetica, sans-serif;   
+}
+
+h4{
+    text-align: center;
+    font-family: 'Outfit', Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    font-size: 3rem;
+    color: rgb(41, 106, 19);
+}
+
+h3{
+    font-family: 'Outfit', Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    color: whitesmoke;
+    background-color: rgb(41, 106, 19);
+    padding: 0.8rem;
+    padding-left: 1.5rem;
+    font-size: 1.5rem;
+    width: 50%;
+    border-radius: 20px;
+    justify-self: center;
+}
+
+.noInquiry{
+    width: 7rem;
+    height: 7rem;
+}
+
+.pNo{
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.list-group-item{
+    font-family: 'work', Arial, Helvetica, sans-serif;
+}
+
+button{
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+}

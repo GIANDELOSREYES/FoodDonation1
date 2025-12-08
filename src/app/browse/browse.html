@@ -1,0 +1,254 @@
+<div style="background: linear-gradient(135deg, #4CAF50 0%, #A5D6A7 40%, #F1F8E9 100%); min-height: 100vh; overflow-y: auto; overflow-x: hidden;">
+
+<h2 class="Donation" style="padding-top: 5rem;">Donations</h2>
+
+  <div class="row" *ngIf="isEmployee()">
+    <div class="col-lg-12">
+       <div id="map"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="search-container">
+      <h2 style="text-align: center;">Search and Sort Donations</h2>
+      <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+      <input type="text" placeholder="Search for donations..." class="searchbar" [(ngModel)]="filterInput" (ngModelChange)="backToAll()">
+        <button class="searchbut" (click)="clickSearch()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-search" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+        </svg></button>
+        
+         <select class="form-select" [ngModel]="sortOrder()" (ngModelChange)="sortOrder.set($event)" style="width: 200px;">
+          <option value="normal">Normal</option>
+          <option value="new-old">Newest → Oldest</option>
+          <option value="old-new">Oldest → Newest</option>
+          <option value="best-by-date">Best By Date (Expiring Soon)</option>
+          <option value="Nearly-Expired">Only Near Expiration</option>
+        </select>
+      </div>
+
+      </div>
+      
+  </div>
+
+<div *ngIf="clickedSearch === true">
+  <div class="container-fluid" *ngIf="filteredDonations.length > 0; else noDonations" style="padding-bottom: 10rem;">
+
+    <div class="row g-3" >
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let donation of filteredDonations">
+
+        <ng-container *ngIf="donation.isApproved == true && donation.status !== 'delivered'">
+
+        <div class="card h-100">
+          <ng-container *ngIf="donation.photoUrl">
+            <img [src]="donation.photoUrl" alt="Donation photo" class="card-img-top">
+          </ng-container>
+          <div class="card-body">
+            
+
+          <!-- NORMAL MODE (unchanged except claim button) -->
+          
+    
+
+          <ng-container *ngIf="donation.isClaimed == true"><h4 class="claimed">Claimed</h4></ng-container>
+          <ng-container *ngIf="checkNearlyExpired(donation.bestByDate)===true"><h4 class="nearly"> ⚠️ Nearly Spoiled</h4></ng-container>
+          
+
+
+            <h5 class="card-title">{{ donation.food }}</h5>
+            <p class="card-text">{{ donation.description }}</p>
+
+            <div class="rowAligned">
+              <p><span style="font-weight: 600;">Quantity:</span> {{ donation.quantity }}</p>
+              <p><span style="font-weight: 600;">Best by:</span> {{ donation.bestByDate }}</p>
+            </div>
+
+            <p><span style="font-weight: 600;">Location:</span> {{ donation.pickupLocation }}</p>
+            <p><span style="font-weight: 600;">Donor Name:</span> {{ donation.donorName }}</p>
+            <p><span style="font-weight: 600;">Contact:</span> {{ donation.contactInformation }}</p>
+
+            <ng-container *ngIf="isEmployee()">
+              <ng-container *ngIf="donation.isClaimed == false && isEmployee()">
+                <button class="btn btn-primary" (click)="startClaim(donation.id)" style="margin-right: 10px;">Claim</button>
+              </ng-container>
+
+              <ng-container *ngIf="donation.isClaimed == true">
+                <button class="btn btn-success" style="width: 8rem; margin-right: 1rem;" (click)="startDelivery(donation.id)">Delivered</button>
+                <button class="btn btn-warning" (click)="startReport(donation.id)" style="width: 7rem;">Report</button>
+              </ng-container>
+            </ng-container>
+
+          </div>
+
+        </div>
+      </ng-container>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="clickedSearch === false">
+  <div class="container-fluid" *ngIf="sortedApprovedDonations.length > 0; else noDonations" style="padding-bottom: 10rem;">
+      
+    <div class="row g-3" >
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let donation of sortedApprovedDonations">
+        
+        <ng-container *ngIf="donation.isApproved == true && donation.status !== 'delivered'">
+          
+
+        <div class="card h-100">
+          <ng-container *ngIf="donation.photoUrl">
+            <img [src]="donation.photoUrl" alt="Donation photo" class="card-img-top">
+          </ng-container>
+          <div class="card-body">
+            
+
+          <!-- NORMAL MODE (unchanged except claim button) -->
+          
+    
+
+          <ng-container *ngIf="donation.isClaimed == true"><h4 class="claimed">Claimed</h4></ng-container>
+          <ng-container *ngIf="checkNearlyExpired(donation.bestByDate)===true"><h4 class="nearly"> ⚠️ Nearly Spoiled</h4></ng-container>
+          
+
+
+            <h5 class="card-title">{{ donation.food }}</h5>
+            <p class="card-text">{{ donation.description }}</p>
+
+            <div class="rowAligned">
+              <p><span style="font-weight: 600;">Quantity:</span> {{ donation.quantity }}</p>
+              <p><span style="font-weight: 600;">Best by:</span> {{ donation.bestByDate }}</p>
+            </div>
+
+            <p><span style="font-weight: 600;">Location:</span> {{ donation.pickupLocation }}</p>
+            <p><span style="font-weight: 600;">Donor Name:</span> {{ donation.donorName }}</p>
+            <p><span style="font-weight: 600;">Contact:</span> {{ donation.contactInformation }}</p>
+
+            <ng-container *ngIf="donation.isClaimed == false && isEmployee()">
+              <button class="btn btn-primary" (click)="startClaim(donation.id)" style="margin-right: 10px;">Claim</button>
+              
+            </ng-container>
+
+            <ng-container *ngIf="donation.isClaimed == true">
+              <button class="btn btn-success" style="width: 8rem; margin-right: 1rem;" (click)="startDelivery(donation.id)">Delivered</button>
+              <button class="btn btn-warning" (click)="startReport(donation.id)" style="width: 7rem;">Report</button>
+            </ng-container>
+
+          </div>
+
+        </div>
+      </ng-container>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #noDonations>
+  <div class="alert alert-info" style="margin-top: 5rem; margin-bottom: 5rem;">
+    <h5 style="color: #1c7120;">No donations available for claiming</h5>
+  </div>
+</ng-template>
+
+<div class="lightbox-overlay" *ngIf="claimId()" (click)="claimId.set(null)">
+  <div class="lightbox-content" (click)="$event.stopPropagation()" style="max-width: 500px; padding: 2rem;">
+    <button class="lightbox-close" (click)="claimId.set(null)">&times;</button>
+    <div *ngIf="currentClaimDonation()" style="color: black;">
+      <h4 style="margin-bottom: 1.5rem;">Claim Donation</h4>
+      <div style="margin-bottom: 1rem;">
+        <p><strong>Food:</strong> {{ currentClaimDonation().food }}</p>
+        <p><strong>Quantity:</strong> {{ currentClaimDonation().quantity }}</p>
+        <p><strong>Pickup Location:</strong> {{ currentClaimDonation().pickupLocation }}</p>
+        <p><strong>Donor Contact:</strong> {{ currentClaimDonation().contactInformation }}</p>
+      </div>
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Recipient Name:</label>
+        <input 
+          [ngModel]="recipientName()" 
+          (ngModelChange)="recipientName.set($event)" 
+          type="text" 
+          class="form-control"
+          placeholder="Enter recipient name" />
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-success" (click)="confirmClaim(currentClaimDonation())">Confirm</button>
+        <button class="btn btn-secondary" (click)="claimId.set(null)">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox-overlay" *ngIf="donationIdToEdit()" (click)="donationIdToEdit.set(null)">
+  <div class="lightbox-content" (click)="$event.stopPropagation()" style="width: 30rem; padding: 2rem;">
+    <button class="lightbox-close" (click)="donationIdToEdit.set(null)">&times;</button>
+    <div *ngIf="currentReportDonation()" style="color: black;">
+      <h4 style="margin-bottom: 1.5rem;">Report Donation</h4>
+      <div style="margin-bottom: 1rem;">
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Reporter Name:</label>
+          <input 
+            [ngModel]="reporterName()" 
+            (ngModelChange)="reporterName.set($event)" 
+            type="text" 
+            class="form-control"
+            placeholder="Enter your name" required />
+        </div>
+
+
+        <div style="width: 100%; display: flex; flex-direction: row; gap: 15px">
+          <div>
+            <label>Reason</label>
+            <select class="form-select" [ngModel]="reason()" (ngModelChange)="reason.set($event)" style="width: 200px; margin-left: 0;" required>
+              <option value="Food spoiled">Food spoiled</option>
+              <option value="Fake Donation">Fake Donation</option>
+              <option value="Donor unresponsive">Donor unresponsive</option>
+              <option value="Safety Issues">Safety Issues</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+          <div>
+            <label>Action</label>
+            <select class="form-select" [ngModel]="action()" (ngModelChange)="action.set($event)" style="width: 200px; margin-left: 0;" required>
+              <option value="Partially accepted">Partially accepted</option>
+              <option value="Fully Refused">Fully Refused</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 1.5rem; display: flex; flex-direction: column;" >
+        <label>Remarks</label>
+        <textarea style="height: 10rem;" placeholder="Explain your report (e.g. no donation in the address specified)" [(ngModel)]="remarks"></textarea>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn1"  (click)="addReport(currentReportDonation())">Report</button>
+        <button class="btn2"  (click)="donationIdToEdit.set(null)">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox-overlay" *ngIf="deliveryId()" (click)="deliveryId.set(null)">
+  <div class="lightbox-content" (click)="$event.stopPropagation()" style="width: 30rem; padding: 2rem;">
+    <button class="lightbox-close" (click)="deliveryId.set(null)">&times;</button>
+    <div style="color: black;">
+      <h4 style="margin-bottom: 1.5rem;">Mark as Delivered?</h4>
+      <div style="margin-bottom: 1rem;">
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Confirm Recipient Name:</label>
+          <input 
+            [ngModel]="recipientNameConfirm()" 
+            (ngModelChange)="recipientNameConfirm.set($event)" 
+            type="text" 
+            class="form-control"
+            placeholder="Enter your name" required />
+        </div>
+        <div style="display: flex; gap: 10px;">
+        <button class="btn btn-success" (click)="checkRecipientNameMatch(deliveryId())" >Confirm</button>
+        <button class="btn2"  (click)="deliveryId.set(null)">Cancel</button>
+      </div>
+
+
+</div>

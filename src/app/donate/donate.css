@@ -1,0 +1,237 @@
+@font-face {
+     font-family: 'salted';
+     src: url(Outfit-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: 'zing';
+    src: url(FontsFree-Net-zing-sans-rust-bold-base.ttf);
+}
+
+@font-face {
+    font-family: 'work';
+    src: url(WorkSans-VariableFont_wght.ttf);
+}
+
+.checkPhoto{
+    font-family: 'salted', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    color: black;
+    background-color: whitesmoke;
+}
+
+.myWelcome{
+    font-family: 'salted', Arial, Helvetica, sans-serif;
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.mySubWelcome{
+    font-family: 'zing', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    padding-bottom: 2rem;
+    color: white;
+}
+
+.container-fluid{
+    padding: 10rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #66BB6A, #C8E6C9);
+}
+
+.container2{
+    border-radius: 20px;
+    background-color: white;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.columns2{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1rem;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+input{
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.button{
+    border-radius: 8px;
+    border: 1px solid rgb(6, 182, 71);
+    background-color: rgb(6, 182, 71);
+    color: white;
+    font-weight: 600;
+    height: 2rem;
+}
+
+textarea{
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+label{
+    font-weight: 600;
+}
+
+
+
+.image-preview{
+    display:flex;
+    gap: 0.5rem;
+    align-items:center;
+}
+
+.image-preview img{
+    max-width: 220px;
+    max-height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.image-preview button{
+    background-color: transparent;
+    border: 1px solid #c00;
+    color: #c00;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.testimonial-card{
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    border-left: #2ba031 8px solid;
+}
+
+.container-fluid1{
+    padding: 5rem;
+    background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(1, 1, 0, 0.7)), url(/assets/foodDonation.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
+.peopleSay{
+    font-family: 'salted', Arial, Helvetica, sans-serif;
+    font-size: 3.5rem;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    text-shadow: rgba(0, 0, 0, 0.1) 2px 2px 4px;
+}
+
+.testimonial-text{
+    font-family: 'work', Arial, Helvetica, sans-serif;
+    font-size: 1.1rem;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.testimonial-author{
+    font-family: 'work', Arial, Helvetica, sans-serif;
+     font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.testimonial-card:hover{
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.container-fluid2{
+    padding: 5rem;
+    background: linear-gradient(to bottom, #2e9932, #76b179, #a7efa7);
+}
+
+.recentDonationTitle{
+    font-family: 'salted', Arial, Helvetica, sans-serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.container3{
+    background-color: white;
+    padding: 2rem 4rem;
+    width: 50rem;
+    justify-self: center;
+    border-radius: 50px;
+    
+}
+
+.faq-question{
+    background-color: whitesmoke;
+    border: transparent;
+    padding:15px 20px;
+    border-radius: 8px;
+    font-family: 'work', Arial, Helvetica, sans-serif;
+}
+
+.faq-question:active, .faq-question:hover{
+    background-color: rgb(6, 182, 71);
+    color: white;
+}
+
+.faq-answer{
+    font-family: 'work', Arial, Helvetica, sans-serif;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+
+@media screen and (max-width: 800px) {
+    .container2{
+        width: 90%;
+        padding: 1rem;
+    }
+
+    .columns2{
+        flex-direction: column;
+    }
+
+    .left, .right{
+        width: 100%;
+    }
+
+    .container3{
+        width: 100%;
+        padding: 1rem 2rem;
+    }
+    
+}

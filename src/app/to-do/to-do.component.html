@@ -1,0 +1,46 @@
+<body>
+    <h3>Inquiries Manager</h3>
+    <h4 class="sub">Here are your inquiries to do list</h4>
+    <!-- Display To-Dos -->
+    <div *ngIf="toDos.length > 0; else noInquiries">
+        <ul>
+            <div *ngFor="let inquiry of toDos">
+                <div class="container">
+                    <div class="card">
+                        <h5 class="card-header">{{inquiry.title}}</h5>
+                            <div class="card-body">
+                                <p class="card-text">{{inquiry.message}}</p>
+                                <div *ngIf="inquiry.photoUrl;" class="mb-3">
+                                    <img [src]="inquiry.photoUrl" alt="Inquiry photo" class="img-fluid" style="max-width: 300px; height: auto; display: block; margin: 0 auto;">
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-sm btn-secondary" (click)="downloadPhoto(inquiry.photoUrl, inquiry.food)">Download Photo</button>
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Food Donated: {{inquiry.food}}</li>
+                                    <li class="list-group-item">Name: {{inquiry.donorName}}</li>
+                                    <li class="list-group-item" style="padding-bottom: 2rem;">Contact Information: {{inquiry.contactInformation}}</li>
+                                </ul>
+                                <button class="btn btn-primary" (click)="removeToDo(inquiry.id)" style="margin-right: 0.5rem;">Done</button>
+                                <button class="btn btn-secondary" (click)="returnInquiry(inquiry.id)" style="margin-right: 0.5rem;">Restore to Inquiries</button>
+
+
+                            </div>
+                    </div> 
+                    <hr style="padding-bottom: 2rem;" >
+                    
+                </div>
+                
+            </div>
+        </ul>
+    </div>
+
+    <ng-template #noInquiries>
+        <div style="display: flex; flex-direction: row; align-items: center; background-color: rgb(6, 182, 71); width: 30rem; color: white; border-radius: 20px; justify-self: center; justify-content: center; border: 5px solid rgb(10, 107, 46) ">
+            <img src="assets/noTodo.png" alt="no inquiry image" class="noInquiry">
+            <p class="pNo">No added inquiries yet.</p> 
+        </div>
+       
+    </ng-template>
+
+</body>

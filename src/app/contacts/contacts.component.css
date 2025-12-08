@@ -1,0 +1,74 @@
+@font-face {
+    font-family: 'outfit';
+    src: url(Outfit-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: 'work';
+    src: url(WorkSans-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: 'Zing';
+    src: url(FontsFree-Net-zing-sans-rust-bold-base.ttf);
+}
+
+
+h4{
+    padding-top: 8rem;
+    padding-bottom: 2rem;
+    text-align: center;
+    font-family: 'outfit', Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    color: #ffffff;
+}
+
+label{
+
+    font-weight: 600;
+}
+
+
+body{
+    height: fit-content;
+    background-image: url(/assets/bgFood.jpeg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 130vh;
+    opacity: 0.9;
+    
+}
+
+.content{
+    width: 40rem;
+    background-color: white;
+    border-radius: 20px;
+    justify-self: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input{
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+button{
+    margin-top: 1rem;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2ba031;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #1c7120;
+}

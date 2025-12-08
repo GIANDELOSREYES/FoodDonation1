@@ -1,0 +1,500 @@
+
+<body class="body2" *ngIf="hasLoggedIn == false">
+
+
+<ng-container  >
+<div class="login">
+  <h2 class="text">Admin Login</h2>
+    <div style="display: flex; flex-direction: column">
+  <label>Username: </label>
+  <input [(ngModel)]="inputUsername" type="text">
+  </div>
+
+  <div style="display: flex; flex-direction: column">
+  <label>Password: </label>
+  <input  [(ngModel)]="inputPassword" type="password">
+  </div>
+  <button  class="loginButton" (click)="checkLogIn();">Log In</button>
+</div>
+
+</ng-container>
+</body>
+
+
+
+
+
+
+
+<body class="body1" style="background-color: whitesmoke;" *ngIf="hasLoggedIn == true">
+
+    <!-- Edit Overlay - Outside Loop to Prevent Flickering -->
+    <div class="donationeditOverylay" *ngIf="donationIdToEdit() !== null">
+      <div class="donationToedit">
+        <h5 class="card-title">
+          Food Item:
+          <input
+            [ngModel]="foodEdit()"
+            (ngModelChange)="foodEdit.set($event)"
+            (keydown.enter)="saveEditedDonation()"
+            type="text"
+            style="width: 100%;"/>
+            </h5>
+
+            <p class="card-text" style="color: black; font-size: larger; margin-top: 1rem;"> Description:
+            <textarea
+            [ngModel]="descriptionEdit()"
+            (ngModelChange)="descriptionEdit.set($event)"
+            (keydown.enter)="saveEditedDonation()"
+            style="width: 100%; height: 6rem;"></textarea>
+            </p>
+
+            <div class="rowAligned">
+            <p>
+            <span style="font-weight: 600;">Quantity:</span>
+            <input
+            [ngModel]="quantityEdit()"
+            (ngModelChange)="quantityEdit.set($event)"
+            (keydown.enter)="saveEditedDonation()"
+            type="text"
+            style="width: 60%;"/>
+            </p>
+
+            <p>
+            <span style="font-weight: 600;">Best by:</span>
+            <input
+            [ngModel]="bestByDateEdit()"
+            (ngModelChange)="bestByDateEdit.set($event)"
+            (keydown.enter)="saveEditedDonation()"
+            type="date"
+            style="width: 60%;"/>
+            </p>
+            </div>
+
+            <p>
+            <span style="font-weight: 600;">Location:</span>
+            <input
+            [ngModel]="pickupLocationEdit()"
+            (ngModelChange)="pickupLocationEdit.set($event)"
+            (keydown.enter)="saveEditedDonation()"
+            type="text"
+            style="width: 100%;"/>
+            </p>
+
+            <p>
+            <span style="font-weight: 600;">Donor Name:</span>
+            <input
+            [ngModel]="donorNameEdit()"
+            (ngModelChange)="donorNameEdit.set($event)"
+            (keydown.enter)="saveEditedDonation()"
+            type="text"
+            style="width: 100%;"/>
+            </p>
+
+            <p>
+            <span style="font-weight: 600;">Contact:</span>
+            <input
+            [ngModel]="contactInformationEdit()"
+            (ngModelChange)="contactInformationEdit.set($event)"
+            (keydown.enter)="saveEditedDonation()"
+            type="text"
+            style="width: 100%;"/>
+            </p>
+
+            <button class="btn btn-success" (click)="saveEditedDonation()">Save</button>
+            <button class="btn btn-danger" style="margin-left: 10px;" (click)="donationIdToEdit.set(null)">Cancel</button>
+      </div>
+    </div>
+
+    <ng-container>
+      <!-- Donations List - No Edit Overlay Here Anymore -->
+  </ng-container>
+
+
+
+
+<ng-container>
+
+<div class="dashboard" style="margin-top: 5rem;">
+
+  <h2 class="admin">Admin Dashboard</h2>
+
+   <div class="container" *ngIf="reports.length >0"> 
+    <h3 class="Reports">Reports
+        <button class="btn btn-secondary" (click)="hideAllDonation()" *ngIf="hideAllDonationShown === false">Hide</button>
+        <button class="btn btn-secondary" (click)="showAllDonation()" *ngIf="hideAllDonationShown === true">Show</button>
+      </h3>
+    <div class="row" *ngIf="hideAllDonationShown === false"
+     style="background-color: white; margin-bottom: 2rem; padding-top: 2rem; border-radius: 8px; box-shadow: 0 3px 6px rgba(0,0,0,0.06);">
+     
+        <div class="col-lg-4" *ngFor="let report of reports">
+            
+            <div  class="card mb-3">
+              <h5 class="card-header1"> ⚠️ Reported Donation</h5>
+                <div class="card-body">
+                  <ng-container *ngIf="report.isSpoiled ==true"><h4 class="spoiled"> 🥫 Spoiled</h4></ng-container>
+                    <p class="card-text"><strong>Reporter Name:</strong> {{ report.reporterName }}</p>
+                    <p class="card-text"><strong>Reason:</strong> {{ report.reason }}</p>
+                    <p class="card-text"><strong>Action:</strong> {{ report.action }}</p>
+                    <p class="card-text"><strong>Remarks:</strong> {{ report.remarks }}</p>
+
+                    <div class="card mb-3" *ngIf="isDonationShown(report.id)">
+                      <div class="card-body">
+                      <p class="card-text"><strong>Food: </strong> {{ report.food }}</p>
+                      <p class="card-text"><strong>Donor:</strong> {{ report.donor }}</p>
+                      <p class="card-text"><strong>Contact:</strong> {{ report.contactInformation }}</p>
+                      <p class="card-text"><strong>Pickup Location:</strong> {{ report.pickupLocation }}</p>
+                    </div>
+                    </div>
+
+                    <button class="btn btn-danger" (click)="deleteReport(report.id)" style="margin-right: 10px;">Delete Report</button>
+                    <button class="btn btn-primary" (click)="showDonation(report.id)" *ngIf="!isDonationShown(report.id)">Show Donation</button>
+                    <button class="btn btn-primary" (click)="hideDonation(report.id)" *ngIf="isDonationShown(report.id)">Hide Donation</button>
+                    <button class="btn btn-success" (click)="proceedDonation(report.donationId, report.id)" *ngIf="report.isSpoiled == true" style="margin-top: 1rem;">Proceed as available donations</button>
+                  </div>
+            </div>
+        </div>  
+    </div> 
+     <hr>
+  </div>
+
+  <div class="filters">
+    <button class="filterBut" (click)="setFilter('All')">All</button>
+    <button class="filterBut" (click)="setFilter('Pending')">Pending</button>
+    <button class="filterBut" (click)="setFilter('Available')">Available</button>
+    <button class="filterBut" (click)="setFilter('Claimed')">Claimed</button>
+    <button class="filterBut" (click)="setFilter('delivered')">Delivered</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <p class="stat-number green">{{ stats().total }}</p>
+      <span>Total Donations</span>
+    </div>
+
+    
+    <div class="stat-card">
+      <p class="stat-number orange">{{ stats().pending }}</p>
+      <span>Pending</span>
+    </div>
+    
+    <div class="stat-card">
+      <p class="stat-number blue">{{ stats().available }}</p>
+      <span>Available</span>
+    </div>
+    
+    <div class="stat-card">
+      <p class="stat-number orange">{{ stats().claimed }}</p>
+      <span>Claimed</span>
+    </div>
+
+    <div class="stat-card">
+      <p class="stat-number orange">{{ stats().delivered }}</p>
+      <span>Delivered</span>
+    </div>
+  </div>
+
+
+ 
+
+  <div class="table-container" *ngIf="currentFiler() === 'All'">
+
+    <div style="display: inline-flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; width: 100%;">
+        <h3>All Donations</h3>
+      <div style="width: 520px; display: flex; align-items: stretch;">
+        <select class="form-select" [ngModel]="sortOrder()" (ngModelChange)="sortOrder.set($event)" style="width: 170px;">
+          <option value="normal">Normal</option>
+          <option value="new-old">Newest → Oldest</option>
+          <option value="old-new">Oldest → Newest</option>
+        </select>
+        <input type="text" placeholder="Search for donations..." class="searchbar" [(ngModel)]="filterInput" (ngModelChange)="backToAll()">
+        <button class="searchbut" (click)="clickSearch()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-search" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+        </svg></button>  
+      </div>
+      
+    </div>
+    
+
+    <table *ngIf="clickedSearch === true">
+      <thead>
+        <tr>
+          <th>Food Item</th>
+          <th>Donor</th>
+          <th>Status</th>
+          <th>Recipient</th>
+          <th>Date Posted</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="filteredDonations.length === 0">
+          <td colspan="6" class="empty-row">No donations yet</td>
+        </tr>
+
+        <tr *ngFor="let d of filteredDonations">
+          <td>{{ d.food }}</td>
+          <td>{{ d.donorName }}</td>
+          <td>{{ d.status }}</td>
+          <td>{{ d.recipient }}</td>
+          <td>{{ d.date }}</td>
+          <td>
+            <ng-container *ngIf="d.isApproved == false"><button class="btn myView" (click)="PhotoDonation(d.id)">View</button></ng-container>
+            <button class="btn btn-primary"style="margin-right: 5px;" (click)="startEditDonation(d)">Edit</button>
+            <button (click)="deleteDonation(d.id)" class="btn btn-danger" style="margin-right: 5px;">Delete</button>
+            <ng-container *ngIf="d.isApproved == false"><button (click)="approveDonation(d)" class="btn btn-success">Approve</button> </ng-container>
+            
+            <div class="lightbox-overlay" *ngIf="isLightboxOpen" (click)="closeLightbox()">
+              <div class="lightbox-content" (click)="$event.stopPropagation()">
+                  <button class="lightbox-close" (click)="closeLightbox()">&times;</button>
+                  <img [src]="selectedPhotoUrl" alt="Donation Photo" class="lightbox-image">
+                  <div class="lightbox-caption">{{d.food}}</div>
+              </div>
+          </div>
+          </td>
+          
+        </tr>
+      </tbody>
+
+    </table>
+
+    <table *ngIf="clickedSearch === false">
+      <thead>
+        <tr>
+          <th>Food Item</th>
+          <th>Donor</th>
+          <th>Status</th>
+          <th>Recipient</th>
+          <th>Date Posted</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="donations().length === 0">
+          <td colspan="6" class="empty-row">No donations yet</td>
+        </tr>
+
+        <tr *ngFor="let d of sortedDonations">
+          <td>{{ d.food }}</td>
+          <td>{{ d.donorName }}</td>
+          <td>{{ d.status }}</td>
+          <td>{{ d.recipient }}</td>
+          <td>{{ d.date }}</td>
+          <td>
+            <ng-container *ngIf="d.isApproved == false"><button class="btn myView" (click)="PhotoDonation(d.id)">View</button></ng-container>
+            <button class="btn btn-primary"style="margin-right: 5px;" (click)="startEditDonation(d)">Edit</button>
+            <button (click)="deleteDonation(d.id)" class="btn btn-danger" style="margin-right: 5px;">Delete</button>
+            <ng-container *ngIf="d.isApproved == false"><button (click)="approveDonation(d)" class="btn btn-success">Approve</button> </ng-container>
+            
+            <div class="lightbox-overlay" *ngIf="isLightboxOpen" (click)="closeLightbox()">
+              <div class="lightbox-content" (click)="$event.stopPropagation()">
+                  <button class="lightbox-close" (click)="closeLightbox()">&times;</button>
+                  <img [src]="selectedPhotoUrl" alt="Donation Photo" class="lightbox-image">
+                  <div class="lightbox-caption">{{d.food}}</div>
+              </div>
+          </div>
+          </td>
+          
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+  <div class="table-container" *ngIf="currentFiler() === 'Pending'">
+    <h3>Pending Donations</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Food Item</th>
+          <th>Donor</th>
+          <th>Status</th>
+          <th>Recipient</th>
+          <th>Date Posted</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="pendingDonations.length === 0">
+          <td colspan="6" class="empty-row">No Pending donations yet</td>
+        </tr>
+
+        <tr *ngFor="let d of pendingDonations">
+          <td>{{ d.food }}</td>
+          <td>{{ d.donorName }}</td>
+          <td>{{ d.status }}</td>
+          <td>{{ d.recipient }}</td>
+          <td>{{ d.date }}</td>
+          <td>
+            <ng-container *ngIf="d.isApproved == false"><button class="btn myView" (click)="PhotoDonation(d.id)">View</button></ng-container>
+            <button class="btn btn-primary"style="margin-right: 5px;" (click)="startEditDonation(d)">Edit</button>
+            <button (click)="deleteDonation(d.id)" class="btn btn-danger" style="margin-right: 5px;">Delete</button>
+            <ng-container *ngIf="d.isApproved == false"><button (click)="approveDonation(d)" class="btn btn-success">Approve</button> </ng-container>
+            
+            <div class="lightbox-overlay" *ngIf="isLightboxOpen" (click)="closeLightbox()">
+              <div class="lightbox-content" (click)="$event.stopPropagation()">
+                  <button class="lightbox-close" (click)="closeLightbox()">&times;</button>
+                  <img [src]="selectedPhotoUrl" alt="Donation Photo" class="lightbox-image">
+                  <div class="lightbox-caption">{{d.food}}</div>
+              </div>
+          </div>
+          </td>
+          
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+  <div class="table-container" *ngIf="currentFiler() === 'Available'">
+    <h3>Available Donations</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Food Item</th>
+          <th>Donor</th>
+          <th>Status</th>
+          <th>Recipient</th>
+          <th>Date Posted</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="availableDonations.length === 0">
+          <td colspan="6" class="empty-row">No Available donations yet</td>
+        </tr>
+
+        <tr *ngFor="let d of availableDonations">
+          <td>{{ d.food }}</td>
+          <td>{{ d.donorName }}</td>
+          <td>{{ d.status }}</td>
+          <td>{{ d.recipient }}</td>
+          <td>{{ d.date }}</td>
+          <td>
+            <ng-container *ngIf="d.isApproved == false"><button class="btn myView" (click)="PhotoDonation(d.id)">View</button></ng-container>
+            <button class="btn btn-primary"style="margin-right: 5px;" (click)="startEditDonation(d)">Edit</button>
+            <button (click)="deleteDonation(d.id)" class="btn btn-danger" style="margin-right: 5px;">Delete</button>
+            <ng-container *ngIf="d.isApproved == false"><button (click)="approveDonation(d)" class="btn btn-success">Approve</button> </ng-container>
+            
+            <div class="lightbox-overlay" *ngIf="isLightboxOpen" (click)="closeLightbox()">
+              <div class="lightbox-content" (click)="$event.stopPropagation()">
+                  <button class="lightbox-close" (click)="closeLightbox()">&times;</button>
+                  <img [src]="selectedPhotoUrl" alt="Donation Photo" class="lightbox-image">
+                  <div class="lightbox-caption">{{d.food}}</div>
+              </div>
+          </div>
+          </td>
+          
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+  <div class="table-container" *ngIf="currentFiler() === 'Claimed'">
+    <h3>Claimed Donations</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Food Item</th>
+          <th>Donor</th>
+          <th>Status</th>
+          <th>Recipient</th>
+          <th>Date Posted</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="claimedDonations.length === 0">
+          <td colspan="6" class="empty-row">No Claimed donations yet</td>
+        </tr>
+
+        <tr *ngFor="let d of claimedDonations">
+          <td>{{ d.food }}</td>
+          <td>{{ d.donorName }}</td>
+          <td>{{ d.status }}</td>
+          <td>{{ d.recipient }}</td>
+          <td>{{ d.date }}</td>
+          <td>
+            <ng-container *ngIf="d.isApproved == false"><button class="btn myView" (click)="PhotoDonation(d.id)">View</button></ng-container>
+            <button class="btn btn-primary"style="margin-right: 5px;" (click)="startEditDonation(d)">Edit</button>
+            <button (click)="deleteDonation(d.id)" class="btn btn-danger" style="margin-right: 5px;">Delete</button>
+            <ng-container *ngIf="d.isApproved == false"><button (click)="approveDonation(d)" class="btn btn-success">Approve</button> </ng-container>
+            
+            <div class="lightbox-overlay" *ngIf="isLightboxOpen" (click)="closeLightbox()">
+              <div class="lightbox-content" (click)="$event.stopPropagation()">
+                  <button class="lightbox-close" (click)="closeLightbox()">&times;</button>
+                  <img [src]="selectedPhotoUrl" alt="Donation Photo" class="lightbox-image">
+                  <div class="lightbox-caption">{{d.food}}</div>
+              </div>
+          </div>
+          </td>
+          
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+  <div class="table-container" *ngIf="currentFiler() === 'delivered'">
+    <h3>Delivered Donations</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Food Item</th>
+          <th>Donor</th>
+          <th>Status</th>
+          <th>Recipient</th>
+          <th>Date Posted</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="deliveredDonations.length === 0">
+          <td colspan="6" class="empty-row">No delivered donations yet</td>
+        </tr>
+
+        <tr *ngFor="let d of deliveredDonations">
+          <td>{{ d.food }}</td>
+          <td>{{ d.donorName }}</td>
+          <td>{{ d.status }}</td>
+          <td>{{ d.recipient }}</td>
+          <td>{{ d.date }}</td>
+          <td>
+            <ng-container *ngIf="d.isApproved == false"><button class="btn myView" (click)="PhotoDonation(d.id)">View</button></ng-container>
+            <button class="btn btn-primary"style="margin-right: 5px;" (click)="startEditDonation(d)">Edit</button>
+            <button (click)="deleteDonation(d.id)" class="btn btn-danger" style="margin-right: 5px;">Delete</button>
+            <ng-container *ngIf="d.isApproved == false"><button (click)="approveDonation(d)" class="btn btn-success">Approve</button> </ng-container>
+            
+            <div class="lightbox-overlay" *ngIf="isLightboxOpen" (click)="closeLightbox()">
+              <div class="lightbox-content" (click)="$event.stopPropagation()">
+                  <button class="lightbox-close" (click)="closeLightbox()">&times;</button>
+                  <img [src]="selectedPhotoUrl" alt="Donation Photo" class="lightbox-image">
+                  <div class="lightbox-caption">{{d.food}}</div>
+              </div>
+          </div>
+          </td>
+          
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+</div>
+
+
+</ng-container>
+
+
+</body>

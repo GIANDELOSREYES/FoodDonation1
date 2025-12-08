@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'Outfit';
+    src: url(Outfit-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: 'Zing';
+    src: url(FontsFree-Net-zing-sans-rust-bold-base.ttf);
+}
+
+body{
+    min-height: 100vh;
+    background-color: whitesmoke;
+    padding-bottom: 10rem;
+}
+
+h3{
+    text-align: center;
+    padding-top: 8rem;
+    font-family: 'Outfit', Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: rgb(41, 106, 19);
+}
+
+.sub{
+    text-align: center;
+    font-family: 'Outfit', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding-bottom: 2rem;
+    color: rgb(41, 106, 19);
+}
+
+.card-header{
+    background-color: rgb(6, 182, 71);
+    color: white;
+}
+
+.btn{
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+}
+
+.noInquiry{
+    width: 7rem;
+    height: 7rem;
+}
+
+.pNo{
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+}

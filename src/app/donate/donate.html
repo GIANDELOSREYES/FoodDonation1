@@ -1,0 +1,119 @@
+<div class="container-fluid">
+
+    <h1 class="myWelcome">Welcome to Food4Baguio Foundation</h1>
+    <h5 class="mySubWelcome">We connect donors with recipients in Baguio</h5>
+
+    <div class="container2">
+        <h4>Post a Food Donation</h4>
+
+        <div style="margin: 1rem 0;">
+            <label for="">Food Item Title</label>
+            <input [(ngModel)]="food" type="text" placeholder="eg. Fresh Vegetables, Cooked Meals" style="width: 100%;" required/>
+        </div>
+
+        <div style="margin: 1rem 0;">
+            <label for="">Description</label>
+            <textarea [(ngModel)]="description" placeholder="Describe the food item, preparation date, etc."
+                style="width: 100%; height: 6rem;"></textarea>
+        </div>
+
+        <div class="columns2">
+            <div class="left">
+                <label for="">Quantity/Servings</label>
+                <input [(ngModel)]="quantity" type="text" placeholder="eg. 10 servings, 5lbs" style="width: 100%;" required/>
+            </div>
+
+            <div class="right">
+                <label for="">Best By Date</label>
+                <input [(ngModel)]="bestByDate" type="date" placeholder="eg. January 10, 2025"
+                    style="width: 100%;" required />
+            </div>
+        </div>
+
+            
+
+        <div style="margin: 1rem 0;">
+            <label for="">Pickup Location</label>
+            <input [(ngModel)]="pickupLocation" type="text" placeholder="Address or general area"
+                style="width: 100%;" required />
+        </div>
+
+        <div class="columns2">
+            <div class="left">
+                <label for="">Your Name</label>
+                <input [(ngModel)]="donorName" type="text" placeholder="Donor Name" style="width: 100%;" required />
+            </div>
+
+            <div class="right">
+                <label for="">Contact Information</label>
+                <input [(ngModel)]="contactInformation" type="text" placeholder="Phone or email"
+                    style="width: 100%;" required/>
+            </div>
+        </div>
+
+         <div class="mt-3">
+            <label for="formFile" class="form-label">Upload a photo</label>
+            <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)" accept="image/*" required>
+        </div>
+
+        <div *ngIf="photoPreview()" class="mt-3" style="text-align: center;">
+            <p class="checkPhoto">Please Check the Photo:</p>
+            <img [src]="photoPreview()" alt="Photo preview" style="max-width: 100%; max-height: 300px; border-radius: 4px; border: 1px solid #ddd;">
+        </div>
+
+        <button (click)="onSubmit()" style="width: 100%; margin-top: 20px;" class="button">Post Donation</button>
+
+    </div>
+
+</div>
+
+<div class="container-fluid1">
+    <h4 class="peopleSay">Trusted by Our Community</h4>
+    <div class="row">
+        
+        <div class="col-lg-4">
+            <div class="testimonial-card">
+                <i class="testimonial-text">"Food4Baguio has made it so easy to donate my extra food. It's rewarding to know that my contributions are going to those in need."</i>
+                <p class="testimonial-author">- Maria S.</p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="testimonial-card">
+                <i class="testimonial-text">"I was very happy to work with this food bank as they helped me donate foods in my beloved community...This app made that possible! "</i>
+                <p class="testimonial-author">- Demil L.</p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="testimonial-card">
+                <i class="testimonial-text">"As a small bakery owner, I used to struggle with daily leftovers. Now nothing goes to waste, and we're feeding families instead of trash bins."</i>
+                <p class="testimonial-author">- Marco E.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid2">
+    <div class="recentDonation">
+        <h4 class="recentDonationTitle">Frequently Asked Questions (FAQs)</h4>
+        <div class="row">
+            <div class="col-lg-12">
+                 <!-- Frequently Asked Questions -->
+                <div class="container3">
+                    <div class="accordion">
+                        <div *ngFor="let item of faqItems(); let i = index" class="faq-item" style="border-bottom: 1px solid #eee; padding: .75rem 0;">
+                            <button class="faq-question" (click)="toggleFaq(i)" style="text-align: left; width: 100%; font-weight: 600;">
+                                {{ item.question }}
+                            </button>
+                            <div *ngIf="item.open" class="faq-answer" style="padding-top: .5rem; color: #333;">
+                                {{ item.answer }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

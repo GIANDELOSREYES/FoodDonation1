@@ -1,0 +1,272 @@
+@font-face {
+    font-family: "salted";
+    src: url(Outfit-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: "Zing";
+    src: url(FontsFree-Net-zing-sans-rust-bold-base.ttf);
+}
+
+@font-face {
+    font-family: 'Zing Light';
+    src: url(WorkSans-VariableFont_wght.ttf);
+}
+
+.card-img-top{
+    width: 100%; 
+    height: 20rem; 
+    object-fit: cover; 
+    display: block;
+}
+
+.buttonClaim{
+    width: 6rem;
+    height: 2.5rem;
+    border:none;
+    font-family: 'Zing',Arial, Helvetica, sans-serif;
+    background-color: #007bff;
+    color: white;
+    font-weight: 600; 
+    border-radius: 10px;
+}
+
+
+.buttonClaim:hover{
+    background-color: lightblue;
+}
+
+
+.container-fluid, .Donation{
+    padding-top: 5rem;
+     
+}
+
+body{
+    background: linear-gradient(135deg, #4CAF50 0%, #A5D6A7 40%, #F1F8E9 100%);
+     min-height: 100vh;
+     overflow-y: auto;
+     overflow-x: hidden;
+}
+
+.rowAligned{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.Donation{
+    padding-top: 6rem;
+    text-align: center;
+    font-family: 'salted', Arial, Helvetica, sans-serif;
+    font-size: 5rem;
+    font-weight: bold;
+    padding-bottom: 2rem;
+    color: white;
+    text-shadow: rgba(0, 0, 0, 0.2) 2px 2px 4px;
+}
+
+.alert{
+    margin: 0 auto;
+    max-width: 900px;
+    background-color: whitesmoke;
+    border: none;
+}
+
+
+
+.card.h-100{
+    display: flex;
+    flex-direction: column;
+}
+
+.card.h-100 .card-body{
+    flex: 1 1 auto;
+}
+
+.card-title{
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.card-text{
+    font-family: 'Zing Light', Arial, Helvetica, sans-serif;
+}
+
+p{
+    font-family: 'Zing Light', Arial, Helvetica, sans-serif;
+}
+
+.btn{
+    width: 6rem;
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    background-color: rgb(0, 200, 0);
+    border: none;
+    color: white;
+}
+
+
+
+.claimed{
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    background-color: rgb(0, 200, 0);
+    color: white;
+    padding: 10px 1rem;
+    border-radius: 15px;
+    width: 9rem;
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
+#map{
+    height: 60vh;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.bi{
+    background-color: rgb(48, 175, 6);
+}
+
+.searchbut{
+    background-color: rgb(48, 175, 6);
+    border: 2px solid rgb(48, 175, 6);
+    padding: 5px 10px;
+
+}
+
+.searchbar{
+    background-color: whitesmoke;
+    border: 2px solid transparent;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 60%;
+    padding: 5px 10px;
+}
+
+.search-container{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin-top: 2rem;
+    height: 8rem;
+    width: 70%;
+    justify-self: center;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 4px;
+}
+
+.form-select{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    background-color: whitesmoke;
+    width: 1rem;
+    height: 2.5rem;
+    margin-left: 1rem;
+}
+
+h2{
+    font-family: 'salted', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    color: rgb(41, 106, 19);
+    padding-top: 1rem;
+}
+
+/* Lightbox Overlay Styles */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.lightbox-content {
+    position: relative;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease-in-out;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+}
+
+.lightbox-close:hover {
+    color: #000;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.btn1{
+    width: 6rem;
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #1677ff; 
+    color: white;
+}
+
+.btn1:hover{
+    background-color: #ffc107;
+    color: black;
+}
+
+.btn2{
+    width: 6rem;
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: gray; 
+    color: white;
+}
+
+.btn2:hover{
+    opacity: 0.5;
+}
+
+.nearly{
+    font-family: 'Zing', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    background-color: rgb(189, 176, 1);
+    color: white;
+    padding: 10px 1rem;
+    border-radius: 15px;
+    width: 17rem;
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
